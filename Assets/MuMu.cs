@@ -25,12 +25,18 @@ public class MuMu : MonoBehaviour
 	//Update is called once per frame
 	void Update ()
     {
-        Rotate();
-        Fly();
+        //todo somewhere stop the sound
+        if (state == State.Alive) //if not alive, cannot move (do anything)
+        {
+            Rotate();
+            Fly();
+        }
 	}
 
     void OnCollisionEnter(Collision collision)
     {
+        if (state != State.Alive) { return; } //if not alive, method stops here
+
         switch (collision.gameObject.tag)
         {
             case "Friendly":
@@ -44,17 +50,18 @@ public class MuMu : MonoBehaviour
                 print("Food");
                 break;
             default:
-                LoadFirstLevel();
+                state = State.Dying;
+                Invoke("LoadFirstLevel", 1f); //1f = 1 sec
                 break;;
         }
     }
 
-    private static void LoadFirstLevel()
+    private void LoadFirstLevel()
     {
         SceneManager.LoadScene(0);
     }
 
-    private void LoadNextScene()
+    private void LoadNextLevel()
     {
         SceneManager.LoadScene(1); //todo more than 2 levels
     }
