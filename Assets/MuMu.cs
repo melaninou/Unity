@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MuMu : MonoBehaviour
 {
@@ -33,11 +34,14 @@ public class MuMu : MonoBehaviour
                 //do nothing
                 print("OK");
                 break;
+            case "Finish":
+                SceneManager.LoadScene(1);
+                break;
             case "Food":
                 print("Food");
                 break;
             default:
-                print("Dead");
+                SceneManager.LoadScene(0);
                 break;;
         }
     }
