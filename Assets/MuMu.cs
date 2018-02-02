@@ -12,14 +12,17 @@ public class MuMu : MonoBehaviour
     Rigidbody rigidbody;
     private AudioSource audioSource;
 
-    // Use this for initialization
+    enum State {Alive, Dying, Transcending}
+    State state = State.Alive;
+
+    //Use this for initialization
     void Start ()
     {
         rigidbody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();    
     }
 	
-	// Update is called once per frame
+	//Update is called once per frame
 	void Update ()
     {
         Rotate();
@@ -31,19 +34,29 @@ public class MuMu : MonoBehaviour
         switch (collision.gameObject.tag)
         {
             case "Friendly":
-                //do nothing
-                print("OK");
+                print("OK"); //todo do nothing
                 break;
             case "Finish":
-                SceneManager.LoadScene(1);
+                state = State.Transcending; //reloading with delay, doesn't open immediately
+                Invoke("LoadNextScene", 1f);
                 break;
             case "Food":
                 print("Food");
                 break;
             default:
-                SceneManager.LoadScene(0);
+                LoadFirstLevel();
                 break;;
         }
+    }
+
+    private static void LoadFirstLevel()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    private void LoadNextScene()
+    {
+        SceneManager.LoadScene(1); //todo more than 2 levels
     }
 
     private void Rotate()
@@ -63,7 +76,7 @@ public class MuMu : MonoBehaviour
         }
 
         rigidbody.freezeRotation = false;
-    }
+    } 
 
     private void Fly()
     {
