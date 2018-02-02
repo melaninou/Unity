@@ -6,12 +6,14 @@ using UnityEngine;
 public class MuMu : MonoBehaviour
 {
     Rigidbody rigidbody;
+    private AudioSource audioSource;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
         rigidbody = GetComponent<Rigidbody>();
-	}
+        audioSource = GetComponent<AudioSource>();    
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -24,15 +26,23 @@ public class MuMu : MonoBehaviour
         if(Input.GetKey(KeyCode.Space))
         {
             rigidbody.AddRelativeForce(Vector3.up);
+            if (!audioSource.isPlaying) //if space is already pressed, it doesn't layer
+            {
+                audioSource.Play();
+            }
+        }
+        else
+        {
+            audioSource.Stop();
         }
 
         if(Input.GetKey(KeyCode.A))
         {
-            print("Rotate left");
+            transform.Rotate(Vector3.forward);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            print("Rotate right");
+            transform.Rotate(-Vector3.forward);
         }
         else if (Input.GetKey(KeyCode.W))
         {
