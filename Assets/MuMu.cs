@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class MuMu : MonoBehaviour
 {
+    [SerializeField] float MuMuRotateEnergy = 200f;
+    [SerializeField] float MuMuFlyEnergy = 30f;
+
     Rigidbody rigidbody;
     private AudioSource audioSource;
 
@@ -18,14 +21,39 @@ public class MuMu : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        ProcessInput();
+        Rotate();
+        Fly();
 	}
 
-    private void ProcessInput()
+    void OnCollisionEnter(Collision collision)
     {
-        if(Input.GetKey(KeyCode.Space))
+
+    }
+
+    private void Rotate()
+    {
+        rigidbody.freezeRotation = true; //take manual control of rotation
+
+        float rotationThisFrame = MuMuRotateEnergy * Time.deltaTime;
+
+        if (Input.GetKey(KeyCode.A))
         {
-            rigidbody.AddRelativeForce(Vector3.up);
+            transform.Rotate(Vector3.forward * rotationThisFrame);
+        }
+
+        else if (Input.GetKey(KeyCode.D))
+        {
+            transform.Rotate(-Vector3.forward * rotationThisFrame);
+        }
+
+        rigidbody.freezeRotation = false;
+    }
+
+    private void Fly()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            rigidbody.AddRelativeForce(Vector3.up * MuMuFlyEnergy);
             if (!audioSource.isPlaying) //if space is already pressed, it doesn't layer
             {
                 audioSource.Play();
@@ -34,23 +62,6 @@ public class MuMu : MonoBehaviour
         else
         {
             audioSource.Stop();
-        }
-
-        if(Input.GetKey(KeyCode.A))
-        {
-            transform.Rotate(Vector3.forward);
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            transform.Rotate(-Vector3.forward);
-        }
-        else if (Input.GetKey(KeyCode.W))
-        {
-            print("Go up");
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            print("Go down");
         }
     }
 }
