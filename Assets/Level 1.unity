@@ -436,7 +436,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 703352fc346cf494981a8f3db783b0e8, type: 2}
   m_IsPrefabParent: 0
---- !u!1001 &1311174734
+--- !u!1001 &1383410728
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -474,6 +474,10 @@ Prefab:
     - target: {fileID: 4096755549499428, guid: a6e60f27833ac1b49975cb61bd85846e, type: 2}
       propertyPath: m_RootOrder
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1787657180847828, guid: a6e60f27833ac1b49975cb61bd85846e, type: 2}
+      propertyPath: m_Name
+      value: Food
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a6e60f27833ac1b49975cb61bd85846e, type: 2}
