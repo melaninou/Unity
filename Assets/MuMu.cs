@@ -27,7 +27,19 @@ public class MuMu : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-
+        switch (collision.gameObject.tag)
+        {
+            case "Friendly":
+                //do nothing
+                print("OK");
+                break;
+            case "Food":
+                print("Food");
+                break;
+            default:
+                print("Dead");
+                break;;
+        }
     }
 
     private void Rotate()
